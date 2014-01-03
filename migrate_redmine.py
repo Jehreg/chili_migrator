@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
 import paramiko
+import sys
+
+paramiko.util.log_to_file('paramiko.log')
 
 def setup_tygerteam_commands():
   raw_commands = '''
