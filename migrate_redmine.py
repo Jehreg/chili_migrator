@@ -142,6 +142,8 @@ def setup_redmine_commands():
     encoding: utf8
   EOF
   unset REDMINE_PASSWORD
+  chmod 640 /var/www/redmine/config/database.yml
+  chgrp www-data /var/www/redmine/config/database.yml
 
   RAILS_ENV="production" bundle exec rake db:migrate
   RAILS_ENV="production" bundle exec rake db:migrate:plugins
