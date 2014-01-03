@@ -226,17 +226,17 @@ def run_on(commands,host="localhost",port=22,username='root'):
   session = ssh.invoke_shell()
   
   buff = ''
-  while not buff.endswith('# '):
+  while not (buff.endswith('# ') or buff.endswith('$ ')):
     resp = session.recv(9999)
+    sys.stdout.write(resp)
     buff += resp
   
   for command in commands:
     session.send (command+"\n")
     buff = ''
-    while not (buff.endswith('# ') or buff.endswith('$ ')):
       resp = session.recv(9999)
+      sys.stdout.write(resp)
       buff += resp
-    print buff
   
   ssh.close()
 
