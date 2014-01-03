@@ -112,7 +112,7 @@ def setup_redmine_commands():
   stty cols 200
   echo 'Acquire::http::Proxy "http://192.168.88.24:3142/apt-cacher/";' > /etc/apt/apt.conf.d/01proxy
   apt-get update
-  apt-get upgrade
+  apt-get upgrade -y
   apt-get install -y postgresql
   apt-get install -y --no-install-recommends git rubygems ruby1.9.1-dev ruby-rmagick rake make gcc openssl
   apt-get install -y libapache2-mod-passenger imagemagick libxml2-dev libxslt1-dev logrotate ssl-cert
