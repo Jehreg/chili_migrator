@@ -248,5 +248,5 @@ run_on(commands, 'www.tygerteam.com', port=22, username='root')
 commands = setup_chili_commands()
 run_on(commands, host='173.230.133.71', port=2022, username='root')
 
-commands = setup_redmine_commands()
+commands = setup_vzhost_commands()
 run_on(commands, '192.168.88.6', port=22, username='root')
