@@ -198,7 +198,7 @@ def setup_redmine_commands():
   commands = [i for i in raw_commands.split("\n")]
   return commands
 
-def run_on(host="localhost",port=22,username='root',commands):
+def run_on(commands,host="localhost",port=22,username='root'):
   ssh = paramiko.SSHClient()
   ssh.set_missing_host_key_policy(
               paramiko.AutoAddPolicy())
@@ -224,10 +224,10 @@ def run_on(host="localhost",port=22,username='root',commands):
 # MAIN
 
 commands = setup_tygerteam_commands()
-run_on(host='www.tygerteam.com', username='root', commands)
+run_on(commands, 'www.tygerteam.com', port=22, username='root')
 
 commands = setup_chili_commands()
-run_on(host='173.230.133.71', port=2022, username='root', commands)
+run_on(commands, host='173.230.133.71', port=2022, username='root')
 
 commands = setup_redmine_commands()
-run_on(host='192.168.88.6', username='root', commands)
+run_on(commands, '192.168.88.6', port=22, username='root')
