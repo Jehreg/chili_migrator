@@ -124,7 +124,7 @@ def setup_redmine_commands():
   cd /var/www
   git clone https://github.com/redmine/redmine
   cd redmine
-  git checkout 2.3-stable
+  git checkout 2.4-stable
   cd /var/www/redmine
   gem install bundler
   cd /var/www/redmine
