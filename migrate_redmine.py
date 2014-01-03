@@ -162,6 +162,7 @@ def setup_redmine_commands():
   chown -R www-data: files log tmp public/plugin_assets
   chmod -R 0755 files log tmp public/plugin_assets
   chmod -x log/*.log
+  a2dismod authz_default authz_groupfile cgid env negotiation status > /dev/null
   '''
   commands = [i for i in raw_commands.split("\n")]
   return commands
