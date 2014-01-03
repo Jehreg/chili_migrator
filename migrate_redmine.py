@@ -78,10 +78,10 @@ def setup_chili_commands():
   pg_dump --no-owner -a -t wiki_redirects                     redmine > wiki_redirects.sql
   pg_dump --no-owner -a -t wikis                              redmine > wikis.sql
   pg_dump --no-owner -a -t workflows              redmine > workflows.sql
-  scp *.sql root@www.tygerteam.com:/tmp/redmine-tables/
-  exit
-  cd /var/www/rails_apps/chiliproject/files
-  scp * root@www.tygerteam.com:/tmp/redmine-files/
+  exit  # Exit the postgres account
+  exit  # Exit the container
+  scp /var/lib/vz/private/1003/tmp/*.sql root@www.tygerteam.com:/tmp/redmine-tables/
+  scp /var/lib/vz/private/1003/var/www/rails_apps/chiliproject/files/* root@www.tygerteam.com:/tmp/redmine-files/
   '''
   commands = [i for i in raw_commands.split("\n")]
   return commands
