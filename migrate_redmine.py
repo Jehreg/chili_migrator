@@ -147,6 +147,16 @@ def setup_redmine_commands():
 
   RAILS_ENV="production" bundle exec rake db:migrate
   RAILS_ENV="production" bundle exec rake db:migrate:plugins
+  cat << EOF > /etc/logrotate.d/redmine
+  /var/www/redmine/log/*.log {
+  daily
+  missingok
+  rotate 7
+  compress
+  notifempty
+  copytruncate
+  }
+  EOF
   '''
   commands = [i for i in raw_commands.split("\n")]
   return commands
