@@ -106,6 +106,9 @@ def setup_vzhost_commands():
   vzctl exec 6016 mkdir /root/.ssh
   vzctl exec 6016 "echo 'ssh-dss AAAAB3NzaC1kc3MAAACBAJggHHtVHrxCbBOjKR3g9Uyuk56T6+5FNo1eWS/fc+IrBXqNfFTLDnZzexqkEAp+jxeZgxmfu8qYiGKUKVxkyc8gym6wrSRufkK78yquvm/LtKhNhCEutWWIiMwMnJhuSogcyGc69FBIXFOubV5PHS3s1kY+Y+3s7ZECvVE9uCzFAAAAFQCBAfWbUTPFyU1fpV3RZYAvlFboewAAAIEAkLv7vmS8ZxnB5CdnPohVDfrqFedkRpqCj0wt6pxCw10P4RzE6in1GKATAFxkY1UfDxGcgP8skvKDq8Y5ZNvKE/KSaAXyeWGy7gH7mGt4DJnXqchmanGs80wRsM8iIteMu4EDWfFMOvbYb0hADzdDj9m4/z6t+7A1so+1KYMgfZsAAACAewtkOqQ7B1GE8Eu0yJcdSDHbUKuBZi5lvpObXPL4efRodI3DgjPEx/GX9sLA0FGFF/0OsvndyKrEE5oubHKrLCY6lyANeGFVx+KxPEI/g1HBVCBmiJ4K3VP8e++jdb3z/uWcdhnHvX/dpDq7DWHWg5oaXDFxQno3uPrbCPELNmo= root@darkstar.tygerteam.internal' > /root/.ssh/authorized_keys"
   vzctl exec 6016 chmod 400 /root/.ssh/authorized_keys
+  vzctl exec 6016 mkdir /tmp/migration
+  vzctl exec 6016 mkdir /tmp/redmine-files
+  rsync -aP root@www.tygerteam.com:/tmp/redmine-tables/* /VEs/private/6016/tmp/migration/
   '''
   commands = [i for i in raw_commands.split("\n")]
   return commands
@@ -119,9 +122,6 @@ def setup_redmine_commands():
   apt-get install -y postgresql
   apt-get install -y --no-install-recommends git rubygems ruby1.9.1-dev ruby-rmagick rake make gcc openssl
   apt-get install -y libapache2-mod-passenger imagemagick libxml2-dev libxslt1-dev logrotate ssl-cert
-  exit
-  rsync -aP root@www.tygerteam.com:/tmp/redmine-tables/* /VEs/private/6016/tmp/migration/
-  vzctl enter 6016
   REDMINE_PASSWORD=$(openssl rand -base64 33)
   echo $REMINE_PASSWORD > /tmp/password
   cd /tmp/migration
