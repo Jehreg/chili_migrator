@@ -89,10 +89,10 @@ def setup_chili_commands():
 
 def setup_redmine_commands():
   raw_commands = '''
-  CTID=6015
+  CTID=6016
   CTNAME=redmine
   vzctl create $CTID --hostname $CTNAME.xelerance.com --name $CTNAME --ostemplate ubunta-12.04-i386
-  vzctl set $CTID --ipadd 192.168.88.59 --privvmpages unlimited --save
+  vzctl set $CTID --ipadd 192.168.88.60 --privvmpages unlimited --save
   vzctl start $CTID
   vzctl enter $CTID
   echo 'Acquire::http::Proxy "http://192.168.88.24:3142/apt-cacher/";' > /etc/apt/apt.conf.d/01proxy
