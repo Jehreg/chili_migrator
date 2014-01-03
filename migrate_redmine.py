@@ -157,6 +157,11 @@ def setup_redmine_commands():
   copytruncate
   }
   EOF
+  cd /var/www/redmine
+  mkdir -p tmp tmp/pdf public/plugin_assets
+  chown -R www-data: files log tmp public/plugin_assets
+  chmod -R 0755 files log tmp public/plugin_assets
+  chmod -x log/*.log
   '''
   commands = [i for i in raw_commands.split("\n")]
   return commands
