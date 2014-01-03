@@ -163,6 +163,37 @@ def setup_redmine_commands():
   chmod -R 0755 files log tmp public/plugin_assets
   chmod -x log/*.log
   a2dismod authz_default authz_groupfile cgid env negotiation status > /dev/null
+  cat << EOF > /etc/apache2/sites-available/redmine.xelerance.com.conf
+  # Passenger tuning
+  PassengerMaxPoolSize 2
+  #PassengerMinInstance 1
+  #PassengerSpawnMethod smart
+  PassengerMaxRequests 1000
+  PassengerUploadBufferDir /tmp/
+  # Breaks compatibility with mod_autoindex and mod_rewrite
+  PassengerHighPerformance on
+  PassengerDefaultUser www-data
+  #PassengerPreStart http://redmine.xelerance.com/
+
+  <VirtualHost *:80>
+      DocumentRoot /var/www/redmine/public
+      ServerName redmine.xelerance.com
+      CustomLog /var/www/redmine/log/access.log combined
+      ErrorLog /var/www/redmine/log/error.log
+
+      <Directory /var/www/redmine/public>
+         AllowOverride None
+         Options FollowSymLinks
+         Order deny,allow
+         Allow from all
+      </Directory>
+  </VirtualHost>
+  EOF
+  a2dissite default 000-default
+  a2dissite default-ssl
+  a2ensite redmine.xelerance.com
+  a2enmod ssl
+  apache2ctl -S && service apache2 restart
   '''
   commands = [i for i in raw_commands.split("\n")]
   return commands
