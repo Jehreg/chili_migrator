@@ -120,7 +120,7 @@ def setup_redmine_commands():
   sed -ibk \"s/journaled_id/journalized_id/\" journals.sql
   sed -ibk \"s/lock_version/version/\" wiki_contents.sql
   for x in `ls *.sql` ; do psql redmine < $x 1>> /tmp/output.txt 2>&1; done
-  exit
+  exit  # Get out of Postgres user
   cd /var/www
   git clone https://github.com/redmine/redmine
   cd redmine
