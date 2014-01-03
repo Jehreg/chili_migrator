@@ -91,7 +91,6 @@ def setup_redmine_commands():
   raw_commands = '''
   CTID=6015
   CTNAME=redmine
-  REDMINE_PASSWORD='mypassword'
   vzctl create $CTID --hostname $CTNAME.xelerance.com --name $CTNAME --ostemplate ubunta-12.04-i386
   vzctl set $CTID --ipadd 192.168.88.59 --privvmpages unlimited --save
   vzctl start $CTID
@@ -100,12 +99,13 @@ def setup_redmine_commands():
   apt-get update
   apt-get upgrade
   apt-get install postgresql
-  apt-get install --no-install-recommends git rubygems ruby1.9.1-dev ruby-rmagick rake make gcc
+  apt-get install --no-install-recommends git rubygems ruby1.9.1-dev ruby-rmagick rake make gcc openssl
   apt-get install ruby-fastercsv libapache2-mod-passenger imagemagick libxml2-dev libxslt-dev logrotate ssl-cert
   exit
   scp root@www.tygerteam.com:/tmp/redmine-tables/* /VEs/private/$CTID/tmp/migration/
   scp root@www.tygerteam.com:/tmp/redmine-files/* /VEs/private/$CTID/var/lib/redmine/default/files/
   vzctl enter $CTID
+  REDMINE_PASSWORD=$(openssl rand -base64 33)
   cd /tmp/migration
   su postgres
   createuser redmine --no-superuser --no-createdb --no-createrole --login --encrypted
