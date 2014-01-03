@@ -131,7 +131,7 @@ def setup_redmine_commands():
   psql << EOM
   alter user redmine PASSWORD '`cat /tmp/password`';
   \q
-  EOM
+EOM
   createdb --owner=redmine --encoding=utf-8 -T template0 redmine
   for x in `ls *.sql` ; do psql redmine -c "delete from ${x%.sql}" ; done
   exit   # Get out of the postgres account
@@ -161,7 +161,7 @@ def setup_redmine_commands():
     username: redmine
     password: "$REDMINE_PASSWORD"
     encoding: utf8
-  EOF
+EOF
   unset REDMINE_PASSWORD
   chmod 640 /var/www/redmine/config/database.yml
   chgrp www-data /var/www/redmine/config/database.yml
@@ -177,7 +177,7 @@ def setup_redmine_commands():
   notifempty
   copytruncate
   }
-  EOF
+EOF
   cd /var/www/redmine
   mkdir -p tmp tmp/pdf public/plugin_assets
   chown -R www-data: files log tmp public/plugin_assets
@@ -209,7 +209,7 @@ def setup_redmine_commands():
          Allow from all
       </Directory>
   </VirtualHost>
-  EOF
+EOF
   a2dissite default 000-default
   a2dissite default-ssl
   a2ensite redmine.xelerance.com
