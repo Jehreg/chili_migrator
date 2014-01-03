@@ -211,6 +211,8 @@ def setup_redmine_commands():
   a2ensite redmine.xelerance.com
   a2enmod ssl
   apache2ctl -S && service apache2 restart
+  exit
+  rsync -aP root@www.tygerteam.com:/tmp/redmine-files/* /VEs/private/6016/var/www/redmine/files/
   '''
   commands = [i for i in raw_commands.split("\n")]
   return commands
