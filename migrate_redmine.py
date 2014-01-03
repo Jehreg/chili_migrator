@@ -109,6 +109,7 @@ def setup_vzhost_commands():
   vzctl exec 6016 mkdir /tmp/migration
   vzctl exec 6016 mkdir /tmp/redmine-files
   rsync -aP root@www.tygerteam.com:/tmp/redmine-tables/* /VEs/private/6016/tmp/migration/
+  rsync -aP root@www.tygerteam.com:/tmp/redmine-files/* /VEs/private/6016/tmp/redmine-files/
   '''
   commands = [i for i in raw_commands.split("\n")]
   return commands
@@ -214,8 +215,7 @@ def setup_redmine_commands():
   a2ensite redmine.xelerance.com
   a2enmod ssl
   apache2ctl -S && service apache2 restart
-  exit
-  rsync -aP root@www.tygerteam.com:/tmp/redmine-files/* /VEs/private/6016/var/www/redmine/files/
+  mv /tmp/redmine-files/* /var/www/redmine/files/
   '''
   commands = [i for i in raw_commands.split("\n")]
   return commands
