@@ -80,7 +80,7 @@ def setup_chili_commands():
   pg_dump --no-owner -a -t workflows              redmine > workflows.sql
   exit  # Exit the postgres account
   exit  # Exit the container
-  scp /var/lib/vz/private/1003/tmp/*.sql root@www.tygerteam.com:/tmp/redmine-tables/
+  scp /var/lib/vz/private/1003/tmp/migration/*.sql root@www.tygerteam.com:/tmp/redmine-tables/
   scp /var/lib/vz/private/1003/var/www/rails_apps/chiliproject/files/* root@www.tygerteam.com:/tmp/redmine-files/
   '''
   commands = [i for i in raw_commands.split("\n")]
