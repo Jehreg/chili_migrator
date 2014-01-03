@@ -91,6 +91,7 @@ def setup_redmine_commands():
   raw_commands = '''
   CTID=6015
   CTNAME=redmine
+  REDMINE_PASSWORD='mypassword'
   vzctl create $CTID --hostname $CTNAME.xelerance.com --name $CTNAME --ostemplate ubunta-12.04-i386
   vzctl set $CTID --ipadd 192.168.88.59 --privvmpages unlimited --save
   vzctl start $CTID
@@ -109,7 +110,7 @@ def setup_redmine_commands():
   su postgres
   createuser redmine --no-superuser --no-createdb --no-createrole --login --encrypted
   psql << EOM
-  alter user redmine PASSWORD 'mypassword';
+  alter user redmine PASSWORD '$REDMINE_PASSWORD';
   \q
   EOM
   createdb --owner=redmine --encoding=utf-8 -T template0 redmine
@@ -133,10 +134,9 @@ def setup_redmine_commands():
   git clone https://github.com/h0tw1r3/redmine-customer-plugin.git
   cat << EOF > /var/www/redmine/config/database.yml
   production:
-    adapter: mysql2
+    adapter: postgresql
     database: redmine
-    #host: 127.0.0.1
-    socket: /var/run/mysqld/mysqld.sock
+    host: 127.0.0.1
     username: redmine
     password: "$REDMINE_PASSWORD"
     encoding: utf8
