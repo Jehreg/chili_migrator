@@ -128,10 +128,7 @@ def setup_redmine_commands():
   cd /tmp/migration
   su postgres
   createuser redmine --no-superuser --no-createdb --no-createrole --login --encrypted
-  psql << EOM
-  alter user redmine PASSWORD '`cat /tmp/password`';
-  \q
-EOM
+  psql -c "alter user redmine PASSWORD '`cat /tmp/password`';"
   createdb --owner=redmine --encoding=utf-8 -T template0 redmine
   for x in `ls *.sql` ; do psql redmine -c "delete from ${x%.sql}" ; done
   exit   # Get out of the postgres account
