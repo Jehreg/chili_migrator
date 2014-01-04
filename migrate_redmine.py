@@ -146,10 +146,6 @@ def setup_redmine_commands():
   cd /var/www/redmine
   gem install bundler
   cd /var/www/redmine
-  RAILS_ENV="production" bundle install --without development test mysql mysql2 sqlite sqlite3 sqlserver openid ldap 
-  mkdir /var/www/redmine/plugins
-  cd /var/www/redmine/plugins/
-  git clone https://github.com/h0tw1r3/redmine-customer-plugin.git
   cat << EOF > /var/www/redmine/config/database.yml
   production:
     adapter: postgresql
@@ -159,6 +155,10 @@ def setup_redmine_commands():
     password: "$REDMINE_PASSWORD"
     encoding: utf8
 EOF
+  RAILS_ENV="production" bundle install --without development test mysql mysql2 sqlite sqlite3 sqlserver openid ldap 
+  mkdir /var/www/redmine/plugins
+  cd /var/www/redmine/plugins/
+  git clone https://github.com/h0tw1r3/redmine-customer-plugin.git
   unset REDMINE_PASSWORD
   chmod 640 /var/www/redmine/config/database.yml
   chgrp www-data /var/www/redmine/config/database.yml
