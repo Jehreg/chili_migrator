@@ -124,7 +124,7 @@ def setup_redmine_commands():
   apt-get install -y --no-install-recommends git rubygems ruby1.9.1-dev ruby-rmagick rake make gcc openssl
   apt-get install -y libapache2-mod-passenger imagemagick libxml2-dev libxslt1-dev logrotate ssl-cert
   REDMINE_PASSWORD=$(openssl rand -base64 33)
-  echo $REMINE_PASSWORD > /tmp/password
+  echo $REDMINE_PASSWORD > /tmp/password
   cd /tmp/migration
   su postgres
   createuser redmine --no-superuser --no-createdb --no-createrole --login --encrypted
